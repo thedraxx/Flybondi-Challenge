@@ -15,25 +15,42 @@ interface DataRecivedProps {
 
 export default function Home({ dataFlies }: DataRecivedProps) {
 
+  // Aca se guardan los vuelos ya filtrados
   const [dataFliesPagination, setDataFliesPagination] = useState<FlyBondyTravels[]>([])
+  // Aca se guardan los vuelos que se van a mostrar en la pagina ya paginados
+  const [tempArrayPagination, setTempArrayPagination] = useState<FlyBondyTravels[]>([])
   const { currentPage, updatePage } = UpdateCurrent.default()
   const { FlyOrigin, FlyDestiny, handleChangeOrigin, handleChangeDestiny } = HandleChange.default()
 
   useEffect(() => {
+    if (dataFliesPagination.length !== 0) {
+      updateFlies()
+    }
+    return;
+  }, [currentPage, dataFliesPagination])
 
-    const actualNumber = currentPage * 10
 
-    const prevNumber = actualNumber - 10
-
+  const handleFilterFlies = () => {
     const tempArrayFlies: React.SetStateAction<FlyBondyTravels[]> = []
-
-    dataFlies.slice(prevNumber, actualNumber).map((fly) => {
-      tempArrayFlies.push(fly)
-    }) // De esta forma se puede hacer un slice de un array de 10 en 10
-
+    dataFlies.map((fly) => {
+      if (fly.origin[0] === FlyOrigin && fly.destination[0] === FlyDestiny) {
+        tempArrayFlies.push(fly)
+      }
+    })
     setDataFliesPagination(tempArrayFlies)
+  }
 
-  }, [currentPage])
+
+  const updateFlies = () => {
+    const actualNumber = currentPage * 10
+    const prevNumber = actualNumber - 10
+    const tempArrayFlies: React.SetStateAction<FlyBondyTravels[]> = []
+    // De esta forma se puede hacer un slice de un array de 10 en 10
+    dataFliesPagination.slice(prevNumber, actualNumber).map((fly) => {
+      tempArrayFlies.push(fly)
+    })
+    setTempArrayPagination(tempArrayFlies)
+  }
 
 
   return (
@@ -97,7 +114,10 @@ export default function Home({ dataFlies }: DataRecivedProps) {
                 sx={{
                   backgroundColor: 'primary.contrastText',
                   padding: '0.5rem',
+                  borderRadius: '0.5rem',
+                  border: 'none',
                 }}
+
               >
                 <MenuItem value={"BRC"}>BRC</MenuItem>
                 <MenuItem value={"COR"}>COR</MenuItem>
@@ -116,6 +136,7 @@ export default function Home({ dataFlies }: DataRecivedProps) {
               flexDirection: 'column',
               width: '250px',
               textAlign: 'center',
+
             }}
           >
 
@@ -132,6 +153,8 @@ export default function Home({ dataFlies }: DataRecivedProps) {
                 sx={{
                   backgroundColor: 'primary.contrastText',
                   padding: '0.5rem',
+                  borderRadius: '0.5rem',
+                  border: 'none',
                 }}
               >
                 <MenuItem value={"BRC"}>BRC</MenuItem>
@@ -143,17 +166,30 @@ export default function Home({ dataFlies }: DataRecivedProps) {
           </Box>
 
           <Button
+            onClick={handleFilterFlies}
             variant="contained"
             sx={{
               backgroundColor: 'primary.main',
               color: 'primary.contrastText',
               marginTop: '1rem',
               width: '250px',
+              transition: 'all 0.5s ease',
               '&:hover': {
                 backgroundColor: 'primary.dark',
+                width: '275px',
+
               },
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'row',
+              alignContent: 'center',
             }}
           >
+            <Typography variant="h6" component="div" gutterBottom style={{
+              marginRight: '0.5rem',
+            }}>
+              Buscar Destino
+            </Typography>
             <SearchOutlined
               className='mr-2 ml'
             />
@@ -203,16 +239,40 @@ export default function Home({ dataFlies }: DataRecivedProps) {
           }}
         >
           {
-            dataFliesPagination.length > 0 && dataFliesPagination.map((fly, index) => (
-              <Grid
-                item
-                xs={12}
-                sm={12}
-                md={2}
-                key={index}>
-                <CardFlies fly={fly} />
-              </Grid>
-            ))
+            dataFliesPagination.length === 0 ? (
+              <Box
+                display={'flex'}
+                flex={1}
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="center"
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexDirection: 'column',
+                  width: '100%',
+                  marginTop: '1rem',
+                  height: { xs: '30vh', sm: '35vh', md: '35vh', lg: '35vh' }
+                }}
+              >
+                <Typography variant="h6" component="div" gutterBottom >
+                  No hay vuelos disponibles
+                </Typography>
+              </Box>
+
+            ) : (
+              tempArrayPagination.sort((a, b) => a.price - b.price).map((fly, index) => (
+                <Grid
+                  item
+                  xs={12}
+                  sm={12}
+                  md={2}
+                  key={index}>
+                  <CardFlies fly={fly} />
+                </Grid>
+              ))
+            )
           }
         </Grid>
       </Box>

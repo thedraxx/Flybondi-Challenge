@@ -8,7 +8,6 @@ interface CardFliesProps {
 }
 
 export const CardFlies = ({ fly }: CardFliesProps) => {
-
     return (
         <Box
             style={{
@@ -35,10 +34,7 @@ export const CardFlies = ({ fly }: CardFliesProps) => {
                             }}
                         >
                             <Typography variant="h6" component="div" gutterBottom>
-                                {fly.origin} -
-                            </Typography>
-                            <Typography variant="h6" component="div" gutterBottom>
-                                - {fly.destination}
+                                {`${fly.origin} - ${fly.destination}`}
                             </Typography>
                         </Box>
 
