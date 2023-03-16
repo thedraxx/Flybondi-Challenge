@@ -2,8 +2,10 @@
 
 export interface FlyBondyTravels {
   data: string;
-  origin: "BRC" | "COR" | "EPA" | "MDZ";
-  destination: "BRC" | "COR" | "EPA" | "MDZ";
+  origin: Travels;
+  destination: Travels;
   price: number;
   availability: number;
 }
+
+export type Travels = "BRC" | "COR" | "EPA" | "MDZ";

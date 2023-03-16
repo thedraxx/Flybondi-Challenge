@@ -11,7 +11,12 @@ export const CardFlies = ({ fly }: CardFliesProps) => {
 
     return (
         <Box
-
+            style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexDirection: 'column',
+            }}
         >
             <Button
                 onClick={() => { console.log(fly) }}
