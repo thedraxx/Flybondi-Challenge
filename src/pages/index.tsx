@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Layouts } from '@/components/Layouts/Layouts'
-import { SearchOutlined } from '@mui/icons-material'
-import { Box, Button, FormControl, Grid, MenuItem, Select, Typography } from '@mui/material'
+import { SearchOutlined, Label } from '@mui/icons-material';
+import { Box, Button, FormControl, Grid, MenuItem, Select, Slider, Typography } from '@mui/material'
 import Image from 'next/image'
 import { FlyBondyTravels } from '@/components/interface'
 import { CardFlies } from '@/components/UI/CardFlies'
@@ -166,6 +166,40 @@ export default function Home({ dataFlies }: DataRecivedProps) {
             </FormControl>
           </Box>
 
+          <Box
+            className='flex justify-center items-center flex-col'
+            sx={{
+              paddingBottom: '0.5rem',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column',
+              width: '250px',
+              textAlign: 'center',
+
+            }}
+          >
+
+            <Typography variant="h6" component="div" gutterBottom >
+              Precio
+            </Typography>
+            <FormControl fullWidth>
+              <Slider
+                // value={value}
+                // onChange={handleChange}
+                valueLabelDisplay="auto"
+                aria-labelledby="range-slider"
+                // getAriaValueText={valuetext}
+                step={50}
+                marks
+                min={0}
+                max={600}
+                sx={{
+                  color: 'primary.contrastText',
+                }}
+              />
+            </FormControl>
+          </Box>
+
           <Button
             onClick={handleFilterFlies}
             variant="contained"
@@ -196,6 +230,8 @@ export default function Home({ dataFlies }: DataRecivedProps) {
             />
           </Button>
         </Box>
+
+
 
         <Box
           display={'flex'}

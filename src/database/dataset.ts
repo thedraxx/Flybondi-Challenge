@@ -1,6 +1,6 @@
 import { FlyBondyTravels } from "@/components/interface";
 
-export const flyBondiTravels: FlyBondyTravels[] = [
+export const flyBondiTravels = [
   {
     data: "2023-11-15",
     origin: "COR",

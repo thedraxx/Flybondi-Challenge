@@ -4,6 +4,7 @@ import { dbFly } from '@/database'
 import { FlyBondyTravels } from '@/components/interface';
 import { GetStaticProps } from 'next'
 import { Layouts } from '@/components/Layouts/Layouts';
+import { Box } from '@mui/material';
 
 interface FlyDetailProps {
     FlyData: FlyBondyTravels
@@ -11,14 +12,43 @@ interface FlyDetailProps {
 
 const FlyDetail = (FlyData: FlyDetailProps) => {
 
-    console.log(FlyData)
+
 
     return (
         <Layouts
             title='Fly Detail'
             description='Fly Detail Page'
         >
-            xd
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '100%',
+                    height: { xs: '30vh', sm: '35vh', md: '35vh', lg: '35vh' },
+                    marginTop: '1rem',
+                    backgroundColor: 'primary.main',
+                }}
+
+
+            >
+                <h1>{FlyData.FlyData.origin}</h1>
+
+                <Box>
+                    <h2>Destiny</h2>
+                    <p>{FlyData.FlyData.destination}</p>
+
+                    <h2>Price</h2>
+                    <p>{FlyData.FlyData.price}</p>
+
+                    <h2>Availability</h2>
+                    <p>{FlyData.FlyData.availability}</p>
+
+
+
+                </Box>
+            </Box>
         </Layouts>
     )
 }
