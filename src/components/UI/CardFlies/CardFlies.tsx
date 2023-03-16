@@ -1,6 +1,7 @@
 import { FlyBondyTravels } from '@/components/interface'
 import React from 'react'
 import { Box, Button, Typography } from '@mui/material';
+import { useRouter } from 'next/router';
 
 
 interface CardFliesProps {
@@ -8,6 +9,10 @@ interface CardFliesProps {
 }
 
 export const CardFlies = ({ fly }: CardFliesProps) => {
+
+
+    const router = useRouter()
+
     return (
         <Box
             style={{
@@ -18,8 +23,9 @@ export const CardFlies = ({ fly }: CardFliesProps) => {
             }}
         >
             <Button
-                onClick={() => { console.log(fly) }}
+                onClick={() => { router.push(`/fly/${fly._id}`) }}
                 className='color-primary card'
+
             >
 
                 <div className='card__content'>

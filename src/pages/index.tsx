@@ -45,8 +45,9 @@ export default function Home({ dataFlies }: DataRecivedProps) {
     const actualNumber = currentPage * 10
     const prevNumber = actualNumber - 10
     const tempArrayFlies: React.SetStateAction<FlyBondyTravels[]> = []
+
     // De esta forma se puede hacer un slice de un array de 10 en 10
-    dataFliesPagination.slice(prevNumber, actualNumber).map((fly) => {
+    dataFliesPagination.sort((a, b) => a.price - b.price).slice(prevNumber, actualNumber).map((fly) => {
       tempArrayFlies.push(fly)
     })
     setTempArrayPagination(tempArrayFlies)
@@ -262,7 +263,7 @@ export default function Home({ dataFlies }: DataRecivedProps) {
               </Box>
 
             ) : (
-              tempArrayPagination.sort((a, b) => a.price - b.price).map((fly, index) => (
+              tempArrayPagination.map((fly, index) => (
                 <Grid
                   item
                   xs={12}
