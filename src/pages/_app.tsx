@@ -7,13 +7,18 @@ import { Layouts } from '@/components/Layouts/Layouts';
 import type { AppProps } from 'next/app'
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { lightTheme } from '@/themes';
+import { UiProvider } from '@/context/ui';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <ThemeProvider theme={lightTheme}>
         <CssBaseline />
-        <Component {...pageProps} />
+        <UiProvider>
+
+          <Component {...pageProps} />
+        </UiProvider>
+
       </ThemeProvider>
     </>
   )

@@ -5,6 +5,7 @@ const HandleChange = () => {
 
     const [FlyOrigin, setFlyValueOrigin] = useState<Travels>("COR")
     const [FlyDestiny, setFlyDestiny] = useState<Travels>("COR")
+    const [valueSlider, setValueSlider] = useState(0)
 
     const handleChangeOrigin = (event: any) => {
         setFlyValueOrigin(event.target.value as Travels)
@@ -14,11 +15,19 @@ const HandleChange = () => {
         setFlyDestiny(event.target.value as Travels)
     }
 
+
+    const handleChangeSlider = (event: any, newValue: number | number[]) => {
+        setValueSlider(newValue as number)
+    }
+
+
     return {
         FlyOrigin,
         FlyDestiny,
         handleChangeOrigin,
-        handleChangeDestiny
+        handleChangeDestiny,
+        handleChangeSlider,
+        valueSlider
     }
 }
 

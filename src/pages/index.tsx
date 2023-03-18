@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Layouts } from '@/components/Layouts/Layouts'
-import { SearchOutlined, Label } from '@mui/icons-material';
+import { SearchOutlined } from '@mui/icons-material';
 import { Box, Button, FormControl, Grid, MenuItem, Select, Slider, Typography } from '@mui/material'
 import Image from 'next/image'
 import { FlyBondyTravels } from '@/components/interface'
@@ -18,9 +18,9 @@ export default function Home({ dataFlies }: DataRecivedProps) {
   // Aca se guardan los vuelos ya filtrados
   const [dataFliesPagination, setDataFliesPagination] = useState<FlyBondyTravels[]>([])
   // Aca se guardan los vuelos que se van a mostrar en la pagina ya paginados
-  const [tempArrayPagination, setTempArrayPagination] = useState<FlyBondyTravels[]>([])
+  const [ArrayPagination, setArrayPagination] = useState<FlyBondyTravels[]>([])
   const { currentPage, updatePage } = UpdateCurrent.default()
-  const { FlyOrigin, FlyDestiny, handleChangeOrigin, handleChangeDestiny } = HandleChange.default()
+  const { FlyOrigin, FlyDestiny, handleChangeOrigin, handleChangeDestiny, handleChangeSlider, valueSlider } = HandleChange.default()
 
   useEffect(() => {
     if (dataFliesPagination.length !== 0) {
@@ -28,17 +28,6 @@ export default function Home({ dataFlies }: DataRecivedProps) {
     }
     return;
   }, [currentPage, dataFliesPagination])
-
-
-  const handleFilterFlies = () => {
-    const tempArrayFlies: React.SetStateAction<FlyBondyTravels[]> = []
-    dataFlies.map((fly) => {
-      if (fly.origin[0] === FlyOrigin && fly.destination[0] === FlyDestiny) {
-        tempArrayFlies.push(fly)
-      }
-    })
-    setDataFliesPagination(tempArrayFlies)
-  }
 
 
   const updateFlies = () => {
@@ -50,7 +39,26 @@ export default function Home({ dataFlies }: DataRecivedProps) {
     dataFliesPagination.sort((a, b) => a.price - b.price).slice(prevNumber, actualNumber).map((fly) => {
       tempArrayFlies.push(fly)
     })
-    setTempArrayPagination(tempArrayFlies)
+    setArrayPagination(tempArrayFlies)
+  }
+
+
+  const handleFilterFlies = () => {
+    const tempArrayFlies: React.SetStateAction<FlyBondyTravels[]> = []
+    dataFlies.map((fly) => {
+      if (valueSlider === 0) {
+        if (fly.origin[0] === FlyOrigin && fly.destination[0] === FlyDestiny) {
+          tempArrayFlies.push(fly)
+        }
+      }
+
+      if (valueSlider !== 0) {
+        if (fly.origin[0] === FlyOrigin && fly.destination[0] === FlyDestiny && fly.price <= valueSlider) {
+          tempArrayFlies.push(fly)
+        }
+      }
+    })
+    setDataFliesPagination(tempArrayFlies)
   }
 
 
@@ -184,8 +192,8 @@ export default function Home({ dataFlies }: DataRecivedProps) {
             </Typography>
             <FormControl fullWidth>
               <Slider
-                // value={value}
-                // onChange={handleChange}
+                value={valueSlider}
+                onChange={handleChangeSlider}
                 valueLabelDisplay="auto"
                 aria-labelledby="range-slider"
                 // getAriaValueText={valuetext}
@@ -230,8 +238,6 @@ export default function Home({ dataFlies }: DataRecivedProps) {
             />
           </Button>
         </Box>
-
-
 
         <Box
           display={'flex'}
@@ -299,7 +305,7 @@ export default function Home({ dataFlies }: DataRecivedProps) {
               </Box>
 
             ) : (
-              tempArrayPagination.map((fly, index) => (
+              ArrayPagination.map((fly, index) => (
                 <Grid
                   item
                   xs={12}

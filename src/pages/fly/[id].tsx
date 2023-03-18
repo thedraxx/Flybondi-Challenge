@@ -4,21 +4,22 @@ import { dbFly } from '@/database'
 import { FlyBondyTravels } from '@/components/interface';
 import { GetStaticProps } from 'next'
 import { Layouts } from '@/components/Layouts/Layouts';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
+import Image from 'next/image';
+import Sidebar from '../../components/UI/SideBar/Sidebar';
 
 interface FlyDetailProps {
     FlyData: FlyBondyTravels
 }
 
 const FlyDetail = (FlyData: FlyDetailProps) => {
-
-
-
     return (
         <Layouts
             title='Fly Detail'
             description='Fly Detail Page'
         >
+
+
             <Box
                 sx={{
                     display: 'flex',
@@ -26,29 +27,82 @@ const FlyDetail = (FlyData: FlyDetailProps) => {
                     alignItems: 'center',
                     justifyContent: 'center',
                     width: '100%',
-                    height: { xs: '30vh', sm: '35vh', md: '35vh', lg: '35vh' },
-                    marginTop: '1rem',
+                    height: '100%',
                     backgroundColor: 'primary.main',
                 }}
-
-
             >
-                <h1>{FlyData.FlyData.origin}</h1>
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '100%',
+                        height: '100%',
+                        backgroundColor: 'primary.main',
+                        marginTop: '20px',
+                        marginBottom: '20px',
+                        padding: '20px',
+                        borderRadius: '20px',
 
-                <Box>
-                    <h2>Destiny</h2>
-                    <p>{FlyData.FlyData.destination}</p>
+                    }}
+                >
 
-                    <h2>Price</h2>
-                    <p>{FlyData.FlyData.price}</p>
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            alignItems: 'start',
+                            justifyContent: 'flex-start',
+                            width: '100%',
+                            height: '100%',
+                            backgroundColor: 'primary.main',
+                            marginTop: '20px',
+                            marginBottom: '20px',
+                            padding: '20px',
+                            borderRadius: '20px',
+                        }}
 
-                    <h2>Availability</h2>
-                    <p>{FlyData.FlyData.availability}</p>
+                    >
+
+                        <Image
+                            src={"https://source.unsplash.com/random/?plane/800x700"}
+                            alt="Picture of the author"
+                            width={800}
+                            height={700}
+                        />
 
 
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                width: '100%',
+                                height: '100%',
+                                backgroundColor: 'primary.main',
+                                marginTop: '20px',
+                                marginBottom: '20px',
+                                padding: '20px',
+                                borderRadius: '20px',
+                            }}
+                        >
+                            <Typography variant='h1'    >Ready for your next Travel?</Typography>
+                            <h1>{FlyData.FlyData.origin}</h1>
+                            <h2>Destiny</h2>
+                            <p>{FlyData.FlyData.destination}</p>
 
-                </Box>
+                            <h2>Price</h2>
+                            <p>{FlyData.FlyData.price}</p>
+
+                            <h2>Availability</h2>
+                            <p>{FlyData.FlyData.availability}</p>
+                        </Box>
+                    </Box>
+                </div>
             </Box>
+
         </Layouts>
     )
 }
