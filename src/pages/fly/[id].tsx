@@ -1,109 +1,212 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { GetStaticPaths } from 'next'
 import { dbFly } from '@/database'
 import { FlyBondyTravels } from '@/components/interface';
 import { GetStaticProps } from 'next'
 import { Layouts } from '@/components/Layouts/Layouts';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, Button } from '@mui/material';
 import Image from 'next/image';
-import Sidebar from '../../components/UI/SideBar/Sidebar';
+
 
 interface FlyDetailProps {
     FlyData: FlyBondyTravels
 }
 
 const FlyDetail = (FlyData: FlyDetailProps) => {
+
+    const [updateCounter, setUpdateCounter] = useState(0)
+
+
+    const handleUpdateCounter = (action: string) => {
+        if (action === "add") {
+            if (updateCounter < FlyData.FlyData.availability) {
+                setUpdateCounter(updateCounter + 1)
+            }
+        }
+        if (action === "remove") {
+            if (updateCounter > 0) {
+                setUpdateCounter(updateCounter - 1)
+            }
+        }
+    }
+
     return (
         <Layouts
             title='Fly Detail'
             description='Fly Detail Page'
         >
-
-
             <Box
                 sx={{
+                    width: '100%',
+                    height: '100vh',
                     display: 'flex',
+                    flex: 1,
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    width: '100%',
-                    height: '100%',
-                    backgroundColor: 'primary.main',
+                    backgroundColor: 'primary.light',
                 }}
             >
-                <div
-                    style={{
+                <Typography
+                    variant='h1'
+                    sx={{
+                        fontWeight: 'bold',
+                        color: 'primary.text',
+                        textAlign: 'center',
+                        marginTop: '20px',
+                    }}
+                >
+                    Welcome Traveler!
+                </Typography>
+                <Box
+                    sx={{
+                        width: { xs: '100%', sm: '100%', md: '100%', lg: '70%', xl: '50%' },
+                        height: 'auto',
                         display: 'flex',
-                        flexDirection: 'column',
+                        flexDirection: { xs: 'column', sm: 'column', md: 'column', lg: 'row', xl: 'row' },
                         alignItems: 'center',
                         justifyContent: 'center',
-                        width: '100%',
-                        height: '100%',
-                        backgroundColor: 'primary.main',
-                        marginTop: '20px',
-                        marginBottom: '20px',
-                        padding: '20px',
-                        borderRadius: '20px',
+                        padding: '40px',
 
                     }}
                 >
-
-                    <Box
-                        sx={{
+                    <Image
+                        style={{
                             display: 'flex',
-                            flexDirection: 'row',
-                            alignItems: 'start',
-                            justifyContent: 'flex-start',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
                             width: '100%',
                             height: '100%',
-                            backgroundColor: 'primary.main',
-                            marginTop: '20px',
-                            marginBottom: '20px',
-                            padding: '20px',
-                            borderRadius: '20px',
+                            borderRadius: '50px',
+                            boxShadow: '0px 0px 10px 0px rgba(0,0,0,0.75)',
+                            marginRight: '25px',
                         }}
+                        src={"https://source.unsplash.com/random/?plane/800x700"}
+                        alt="Picture of the author"
+                        width={800}
+                        height={700}
+                    />
 
-                    >
 
-                        <Image
-                            src={"https://source.unsplash.com/random/?plane/800x700"}
-                            alt="Picture of the author"
-                            width={800}
-                            height={700}
-                        />
+                    <Box>
+                        <Typography
+                            variant='h6'
+                            sx={{
+                                fontWeight: 'bold',
+                                color: 'primary.text',
+                                textAlign: 'center',
+                                marginTop: '20px',
+                            }}
+                        >
+                            from {FlyData.FlyData.origin} to {FlyData.FlyData.destination}
+                        </Typography>
 
+                        <Typography
+                            variant='h6'
+                            sx={{
+                                fontWeight: 'bold',
+                                color: 'primary.text',
+                                textAlign: 'center',
+                                marginTop: '20px',
+                            }}
+                        >
+                            Date: {FlyData.FlyData.data}
+                        </Typography>
+
+
+                        <Typography
+
+                            variant='h6'
+                            sx={{
+                                fontWeight: 'bold',
+                                color: 'primary.text',
+                                textAlign: 'center',
+                                marginTop: '20px',
+                            }}
+                        >
+                            Availability: {FlyData.FlyData.availability} Tickets
+                        </Typography>
+
+                        <Typography
+                            variant='h6'
+                            sx={{
+                                fontWeight: 'bold',
+                                color: 'primary.text',
+                                textAlign: 'center',
+                                marginTop: '20px',
+                            }}
+                        >
+                            Value for Ticket: {FlyData.FlyData.price} $
+                        </Typography>
 
                         <Box
                             sx={{
+                                width: '100%',
+                                height: 'auto',
                                 display: 'flex',
-                                flexDirection: 'column',
+                                flexDirection: 'row',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                width: '100%',
-                                height: '100%',
-                                backgroundColor: 'primary.main',
                                 marginTop: '20px',
-                                marginBottom: '20px',
-                                padding: '20px',
-                                borderRadius: '20px',
                             }}
                         >
-                            <Typography variant='h1'    >Ready for your next Travel?</Typography>
-                            <h1>{FlyData.FlyData.origin}</h1>
-                            <h2>Destiny</h2>
-                            <p>{FlyData.FlyData.destination}</p>
 
-                            <h2>Price</h2>
-                            <p>{FlyData.FlyData.price}</p>
 
-                            <h2>Availability</h2>
-                            <p>{FlyData.FlyData.availability}</p>
+                            <Button
+                                variant="contained"
+                                sx={{
+                                    backgroundColor: 'primary.main',
+                                    color: 'primary.text',
+                                    marginRight: '10px',
+                                    '&:hover': {
+                                        backgroundColor: 'primary.dark',
+                                    },
+                                }}
+                                onClick={() => handleUpdateCounter("remove")}
+                            >
+                                -
+                            </Button>
+                            <Typography
+                                variant='h6'
+                                sx={{
+                                    fontWeight: 'bold',
+                                    color: 'primary.text',
+                                    textAlign: 'center',
+
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    alignSelf: 'center',
+                                    alignContent: 'center',
+
+                                }}
+                            >
+                                {updateCounter}
+                            </Typography>
+                            <Button
+
+                                variant="contained"
+                                sx={{
+                                    backgroundColor: 'primary.main',
+                                    color: 'primary.text',
+                                    marginLeft: '10px',
+                                    '&:hover': {
+                                        backgroundColor: 'primary.dark',
+                                    },
+                                }}
+                                onClick={() => handleUpdateCounter("add")}
+                            >
+                                +
+                            </Button>
+
                         </Box>
                     </Box>
-                </div>
+
+                </Box>
+
             </Box>
 
-        </Layouts>
+        </Layouts >
     )
 }
 

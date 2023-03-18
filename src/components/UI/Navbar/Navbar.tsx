@@ -33,6 +33,16 @@ const Navbar = () => {
 
                     }}
             />
+
+            <Typography variant="h6" style={{ cursor: 'pointer', marginRight: '25px', marginLeft: "25px" }}>
+                <Link href="/">
+                    <h1 style={{ textDecoration: 'none', color: 'white' }}>
+                        FlyBondi
+                    </h1>
+                </Link>
+            </Typography>
+
+
             <div
                 style={
                     {

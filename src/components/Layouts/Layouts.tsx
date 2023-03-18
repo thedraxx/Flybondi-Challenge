@@ -2,6 +2,7 @@ import Head from 'next/head'
 import React from 'react'
 import Navbar from '../UI/Navbar/Navbar';
 import Sidebar from '../UI/SideBar/Sidebar';
+import Footer from '../UI/Footer/Footer';
 
 
 interface LayoutsProps {
@@ -39,9 +40,18 @@ export const Layouts = ({ children, title = "", description = "" }: LayoutsProps
             <Sidebar />
             <main
                 className='color-primary'
+                style={{
+                    width: '100%',
+                    height: '100%',
+                    display: 'flex',
+                    flex: 1,
+
+                }}
             >
                 {children}
             </main>
+
+            <Footer />
         </>
     )
 }
