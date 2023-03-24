@@ -12,8 +12,7 @@
 ```
 MONGO_URL=mongodb://localhost:27017/flybondiDB
 ```
-
-*     Rebuild Node Modules and run NEXT.JS
+Rebuild Node Modules and run NEXT.JS
 ```
     yarn install 
     yarn dev
@@ -38,6 +37,10 @@ This is a Flybondi-challenge using React + NextJS + Typescript, you can see the 
 - Filter the flies by price."
 
 ## 🎥 A little video of the WEB:
+
+
+https://user-images.githubusercontent.com/55867157/227643123-a956b036-2e01-405d-b017-05ded220000c.mp4
+
 
 
 <br> The app is made with the following technologies:</br>
